@@ -134,6 +134,7 @@ class Profiles(metaclass=ABCMeta):
             cls.ParallelHomogeneous,
             cls.ParallelHomogeneousTotal,
             cls.Smpi,
+            cls.UsageTrace,
             cls.Sequence,
             cls.ParallelPFS,
             cls.DataStaging,
@@ -241,6 +242,28 @@ class Profiles(metaclass=ABCMeta):
         """Implementation of the Smpi profile."""
 
         type = "smpi"
+
+        def __init__(self, trace_file, **kwargs):
+            super().__init__(**kwargs)
+            self.trace_file = trace_file
+
+        @classmethod
+        def from_dict(cls, dct, name=None):
+            return cls(trace_file=dct["trace_file"],
+                       ret=dct.get("ret", 0),
+                       name=name)
+
+        def to_dict(self, embed_references=False):
+            return {
+                "type": self.type,
+                "trace": self.trace_file,
+                "ret": self.ret,
+            }
+        
+    class UsageTrace(Profile):
+        """Implementation of the usage trace profile."""
+
+        type = "usage_trace"
 
         def __init__(self, trace_file, **kwargs):
             super().__init__(**kwargs)
