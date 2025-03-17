@@ -271,7 +271,7 @@ class Profiles(metaclass=ABCMeta):
 
         @classmethod
         def from_dict(cls, dct, name=None):
-            return cls(trace_file=dct["trace_file"],
+            return cls(trace_file=dct["trace"],
                        ret=dct.get("ret", 0),
                        name=name)
 
